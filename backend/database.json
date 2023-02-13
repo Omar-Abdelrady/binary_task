@@ -1,0 +1,23 @@
+{
+  "defaultEnv": { "ENV": "NODE_ENV" },
+  "dev": {
+    "driver": "pg",
+    "user": { "ENV": "PGUSER" },
+    "password": { "ENV": "PGPASSWORD" },
+    "host": { "ENV": "PGHOST" },
+    "database": { "ENV": "PGDATABASE" },
+    "port": { "ENV": "PGPORT" },
+    "ssl": "true",
+    "schema": "my_schema"
+  },
+  "test": {
+    "driver": "pg",
+    "user": { "ENV": "PGUSER" },
+    "password": { "ENV": "PGPASSWORD" },
+    "host": { "ENV": "PGHOST" },
+    "database": { "ENV": "PGDATABASE_TEST" },
+    "port": { "ENV": "PGPORT" },
+    "ssl": "true",
+    "schema": "my_schema"
+  }
+}
