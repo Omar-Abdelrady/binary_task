@@ -8,7 +8,6 @@ export default async function login(req: any, res: any) {
     }).then(response => {
         res.status(200).json(response.data)
     }).catch(err => {
-        console.log(err.response.data)
-        res.status(401).json(err.response.data)
+        res.status(403).json(err.response.data)
     })
 }

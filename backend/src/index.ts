@@ -4,6 +4,8 @@ import helmet from "helmet";
 import rateLimit from "express-rate-limit";
 import connection from "./database/config";
 import authRoutes from "./routes/auth/auth";
+import welcomeRouter from "./routes/welcome";
+import userRouter from "./routes/user/user";
 import dotenv from "dotenv";
 dotenv.config();
 
@@ -28,13 +30,14 @@ const apiLimiter = rateLimit({
   message: "Too many requests from this IP, please try again after an hour",
 });
 
-app.use(apiLimiter);
+// app.use(apiLimiter);
 
 app.listen(PORT, () => {
   console.log("server listening on port http://localhost:" + PORT);
 });
 
-app.use("/api", authRoutes);
+app.use("/api", authRoutes, welcomeRouter);
+app.use("/api/user", userRouter);
 
 connection
   .sync()

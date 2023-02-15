@@ -1,8 +1,9 @@
-import { Response, Request, RequestHandler } from "express";
+import { RequestHandler } from "express";
 import { Users } from "../../models/users";
 import Hash from "crypto-js/md5";
 import jwt from "jsonwebtoken";
 export const login: RequestHandler = async (req, res, next) => {
+  const jwt_secret: any = process.env.JWT_SECRET;
   try {
     const user = await Users.findOne({
       where: {
@@ -10,11 +11,10 @@ export const login: RequestHandler = async (req, res, next) => {
         password: Hash(req.body.password).toString(),
       },
     });
-    if (user === null)
-    return res.status(401).json({ message: "email or password incorrect" });
-
-    const jwt_secret: any = process.env.JWT_SECRET;
-    console.log(jwt_secret);
+    if (!user)
+      return res.status(401).json({ message: "email or password incorrect" });
+    if (!user?.email_is_verified)
+      return res.status(403).json({ message: "your email is not verified" });
     const accessToken = jwt.sign(
       {
         id: user?.id,

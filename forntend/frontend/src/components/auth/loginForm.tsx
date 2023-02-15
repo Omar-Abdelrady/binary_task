@@ -19,18 +19,17 @@ export default function loginForm(){
                 method: "POST",
                 data: payloadData
             }).then(response => {
-            console.log(response.data.accessToken)
             localStorage.setItem("token",response.data.accessToken)
             window.location.href = '/'
         }).catch(error => {
-            console.log(error)
+            if (error.response.status==403) window.location.href = '/verify-email'
             window.alert(error.response.data.message)
         })
     }
     ;
     return (
         <>
-            <form action="" onSubmit={handleSubmit} className="" style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+            <form action="post" onSubmit={handleSubmit} className="" style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
                 <Box style={{ width: '100%'}}>
                     <TextField margin="normal" required name="email" style={{ width: '100%'}} label="Email Address" variant="outlined" />
                     <TextField
